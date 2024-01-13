@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate, Link, useLocation } from "react-router-dom";
@@ -13,12 +12,7 @@ const DashHeader = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
-  const [sendLogout, { isLoading, isSuccess, isError, error }] =
-    useSendLogoutMutation();
-
-  useEffect(() => {
-    if (isSuccess) navigate("/");
-  }, [isSuccess, navigate]);
+  const [sendLogout, { isLoading, isError, error }] = useSendLogoutMutation();
 
   if (isLoading) return <p>Logging Out...</p>;
 
@@ -33,8 +27,18 @@ const DashHeader = () => {
     dashClass = "dash-header__container--small";
   }
 
+  // https://github.com/reduxjs/redux-toolkit/issues/3997
+  const handleSendLogout = async () => {
+    try {
+      await sendLogout({}).unwrap();
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const logoutButton = (
-    <button className="icon-button" title="Logout" onClick={sendLogout}>
+    <button className="icon-button" title="Logout" onClick={handleSendLogout}>
       <FontAwesomeIcon icon={faRightFromBracket} />
     </button>
   );
