@@ -1,3 +1,11 @@
+# Deployment
+
+The static site is deployed [here](https://technotes-87z1.onrender.com).
+
+# Server Code
+
+The [repository](https://github.com/gitychub/technotes-api) hosts the server code.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
